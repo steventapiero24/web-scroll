@@ -24,6 +24,8 @@ class App {
 
         this._createTextAnimation();
 
+        this._createPinSection();
+
     }
 
     _setInitialStates() {
@@ -44,7 +46,7 @@ class App {
 
     _createLenis() {
         this.lenis = new Lenis({
-            lerp: 0.1
+            lerp: 0.06
         })
     }
 
@@ -106,6 +108,29 @@ class App {
                 scaleX:0
             })
         })
+    }
+
+    _createPinSection () {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.fullwidth-image',
+                start: 'top top',
+                end: '+=1500',
+                scrub: true,
+                pin: true,
+            }
+        })
+
+        tl.to('.fullwidth-image__overlay', {
+            opacity: 0.4
+        }).to ('.fullwidth-image', {
+            "clip-path": "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        },0 ).to('.fullwidth-image img', {
+            scale: 1
+        },0).to('.fullwidth-image__text', {
+            y:0,
+            opacity: 1
+        },0)
     }
 
     _render(time) {
