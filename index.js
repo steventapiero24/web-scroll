@@ -5,6 +5,8 @@ class App {
         
      this.heroImages = [...document.querySelectorAll('.hero__images img')]
 
+     this.texts = [...document.querySelectorAll('.text__effect')]
+
      this._inicialize();
 
      this._render();
@@ -16,14 +18,16 @@ class App {
 
         this._createLenis();
 
-        this._createIntro()
+        this._createIntro();
 
-        this._createHero()
+        this._createHero();
+
+        this._createTextAnimation();
 
     }
 
     _setInitialStates() {
-        gsap.set('.hero__title span, .text__effect p, .fullwidth-image__text ', {
+        gsap.set('.hero__title span, .fullwidth-image__text ', {
             y:32,
             opacity: 0
         })
@@ -82,6 +86,28 @@ class App {
         })
     }
     
+
+    _createTextAnimation () {
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: '.text-block',
+                start: 'top center',
+                end: 'bopttom top+=10%',
+                scrub: true,
+
+
+            }
+        });
+
+        this.texts.forEach(( text, index) => {
+            const overlay = text.querySelectorAll('.text__overlay')
+
+            tl.to(overlay, {
+                scaleX:0
+            })
+        })
+    }
+
     _render(time) {
         this.lenis.raf(time);
 
